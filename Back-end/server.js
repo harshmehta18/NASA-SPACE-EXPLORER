@@ -1,161 +1,57 @@
-// const express = require('express');
-// const axios = require('axios');
-// const cors = require('cors');
-// require('dotenv').config();
-
-// const app = express();
-// const PORT = process.env.PORT || 5002;
-
-// app.use(cors());
-// app.use(express.json());
-
-// // const path = require('path');
-
-// // // Serve static files from the React app
-// // app.use(express.static(path.join(__dirname, 'frontend/build')));
-
-// // // Handle React routing, return all requests to React app
-// // app.get('*', (req, res) => {
-// //   res.sendFile(path.join(__dirname, 'frontend/build', 'index.html'));
-// // });
-
-// const NASA_API_BASE_URL = 'https://api.nasa.gov';
-
-// app.get('/apod', async (req, res) => {
-//     try {
-//         const response = await axios.get(`${NASA_API_BASE_URL}/planetary/apod`, {
-//             params: {
-//                 api_key: process.env.NASA_API_KEY,
-//             },
-//         });
-//         res.json(response.data);
-//     } catch (error) {
-//         res.status(500).json({ error: 'Failed to fetch APOD data' });
-//     }
-// });
-
-// app.get('/mars-rover-photos', async (req, res) => {
-//     try {
-//         const { rover, earth_date } = req.query;
-//         const response = await axios.get(`${NASA_API_BASE_URL}/mars-photos/api/v1/rovers/${rover}/photos`, {
-//             params: {
-//                 earth_date,
-//                 api_key: process.env.NASA_API_KEY,
-//             },
-//         });
-//         res.json(response.data);
-//     } catch (error) {
-//         res.status(500).json({ error: 'Failed to fetch Mars Rover photos' });
-//     }
-// });
-
-
-// app.get('/epic', async (req, res) => {
-//     try {
-//         const response = await axios.get(
-//             `https://api.nasa.gov/EPIC/api/natural?api_key=${process.env.NASA_API_KEY}`
-//         );
-//         res.json(response.data);
-//     } catch (error) {
-//         res.status(500).json({ error: 'Failed to fetch EPIC data' });
-//     }
-// });
-
-// app.listen(PORT, () => {
-//     console.log(`Server is running on port ${PORT}`);
-// });
-
-
-
-// const express = require('express');
-// const axios = require('axios');
-// const cors = require('cors');
-// const path = require('path');
-// require('dotenv').config();
-
-// const app = express();
-// const PORT = process.env.PORT || 5002;
-
-// app.use(cors());
-// app.use(express.json());
-
-// // Serve static files from React build
-// app.use(express.static(path.join(__dirname, 'frontend/build')));
-
-// // API endpoints
-// const NASA_API_BASE_URL = 'https://api.nasa.gov';
-
-// app.get('/apod', async (req, res) => {
-//     try {
-//         const response = await axios.get(`${NASA_API_BASE_URL}/planetary/apod`, {
-//             params: { api_key: process.env.NASA_API_KEY }
-//         });
-//         res.json(response.data);
-//     } catch (error) {
-//         res.status(500).json({ error: 'Failed to fetch APOD data' });
-//     }
-// });
-
-// app.get('/mars-rover-photos', async (req, res) => {
-//     try {
-//         const { rover, earth_date } = req.query;
-//         const response = await axios.get(`${NASA_API_BASE_URL}/mars-photos/api/v1/rovers/${rover}/photos`, {
-//             params: { earth_date, api_key: process.env.NASA_API_KEY }
-//         });
-//         res.json(response.data);
-//     } catch (error) {
-//         res.status(500).json({ error: 'Failed to fetch Mars Rover photos' });
-//     }
-// });
-
-// app.get('/epic', async (req, res) => {
-//     try {
-//         const response = await axios.get(`${NASA_API_BASE_URL}/EPIC/api/natural`, {
-//             params: { api_key: process.env.NASA_API_KEY }
-//         });
-//         res.json(response.data);
-//     } catch (error) {
-//         res.status(500).json({ error: 'Failed to fetch EPIC data' });
-//     }
-// });
-
-// // Handle React routing
-// app.get('*', (req, res) => {
-//     res.sendFile(path.join(__dirname, 'frontend/build', 'index.html'));
-// });
-
-// app.listen(PORT, () => {
-//     console.log(`Server running on port ${PORT}`);
-// });
-
-
-
+// Import the Express framework to create the server
 const express = require('express');
+
+// Import CORS middleware for cross-origin resource sharing
 const cors = require('cors');
+
+// Import path module for working with file and directory paths
 const path = require('path');
+
+// Load environment variables from .env file
 require('dotenv').config();
 
+// Create an Express application instance
 const app = express();
+
+// Set the server port from environment variables or default to 5002
 const PORT = process.env.PORT || 5002;
 
-// Middleware
+// Enable Cross-Origin Resource Sharing (CORS)
+// Allows frontend to make requests to this backend from different origins
 app.use(cors());
+
+// Parse incoming JSON requests
+// Enables Express to automatically parse JSON request bodies
 app.use(express.json());
 
-// API Routes
+// Mount APOD (Astronomy Picture of the Day) routes
+// All requests to /apod will be handled by apodRoutes
 app.use('/apod', require('./routes/apodRoutes'));
+
+// Mount Mars Rover photos routes
+// All requests to /mars-rover-photos will be handled by marsRoverRoutes
 app.use('/mars-rover-photos', require('./routes/marsRoverRoutes'));
+
+// Mount EPIC (Earth Polychromatic Imaging Camera) routes
+// All requests to /epic will be handled by epicRoutes
 app.use('/epic', require('./routes/epicRoutes'));
 
-// Serve React frontend
+// Serve static files from the React frontend build directory
+// This allows Express to serve the compiled React application
 app.use(express.static(path.join(__dirname, 'frontend/build')));
+
+// Handle all other requests by serving the React index.html file
+// This enables client-side routing with React Router
 app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, 'frontend/build', 'index.html'));
 });
 
-// Start server
+// Start the Express server and listen on the specified port
 app.listen(PORT, () => {
+    // Server start confirmation message
     console.log(`Space Explorer backend running on port ${PORT}`);
+    
+    // Log available API endpoints
     console.log(`Endpoints:`);
     console.log(`   - http://localhost:${PORT}/apod`);
     console.log(`   - http://localhost:${PORT}/mars-rover-photos`);
