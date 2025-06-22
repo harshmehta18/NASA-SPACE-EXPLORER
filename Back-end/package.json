@@ -1,5 +1,5 @@
 {
-  "name": "nasa-explorer-backend",
+  "name": "nasa-explorer",
   "engines": {
     "node": ">=18.0.0"
   },
