@@ -38,7 +38,8 @@ app.use('/epic', require('./routes/epicRoutes'));
 
 // Serve static files from the React frontend build directory
 // This allows Express to serve the compiled React application
-app.use(express.static(path.join(__dirname, 'frontend/build')));
+//app.use(express.static(path.join(__dirname, 'frontend/build')));
+app.use(express.static(path.join(__dirname, '../frontend/build')));
 
 // Handle all other requests by serving the React index.html file
 // This enables client-side routing with React Router

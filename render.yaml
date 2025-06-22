@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: nasa-explorer
+    env: node
+    buildCommand: |
+      cd frontend && npm install && npm run build
+      cd ../Back-end && npm install
+    startCommand: cd Back-end && node server.js
+    envVars:
+      - key: NASA_API_KEY
+        value: QJQHWGcHD50NsRD7gD6XVniESG1eW77xDdEVElbL
+      - key: PORT
+        value: 10000
