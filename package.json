@@ -1,14 +1,16 @@
 {
   "description": "A web application that showcases NASA's space data through interactive visualizations and multimedia content.",
   "main": "index.js",
-  "name": "nasa-explorer-frontend",
+  "name": "nasa-explorer",
   "version": "1.0.0",
   "engines": {
     "node": ">=18.0.0"
   },
   "proxy": "http://localhost:5002",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "cd frontend && npm install && npm run build && cd ../Back-end && npm install",
+    "start": "cd Back-end && node server.js"
   },
   "keywords": [],
   "author": "",
