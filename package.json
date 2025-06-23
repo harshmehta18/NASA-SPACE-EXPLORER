@@ -3,26 +3,16 @@
   "main": "index.js",
   "name": "nasa-explorer",
   "version": "1.0.0",
-  "engines": {
-    "node": ">=18.0.0"
-  },
   "proxy": "http://localhost:5002",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "cd frontend && npm install && npm run build && cd ../Back-end && npm install",
-    "start": "cd Back-end && node server.js"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "autoprefixer": "^10.4.21",
-    "postcss": "^8.5.6",
-    "tailwindcss": "^4.1.10"
-  },
-  "dependencies": {
-    "@tailwindcss/cli": "^4.1.10",
-    "@tailwindcss/vite": "^4.1.10"
+    "postcss": "^8.5.6"
   }
   
 }
